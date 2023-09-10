@@ -1,0 +1,347 @@
+html[lang="en"] [lang="ru"] {
+	display: none;
+}
+
+html[lang="ru"] [lang="en"] {
+	display: none;
+}
+
+.tool-buttons {
+	display: flex;
+	align-items: stretch;
+	border-bottom: 1px solid var(--color-dark-face-brd);
+	user-select: none;
+}
+
+.tool-buttons .free-space {
+	flex: 1;
+}
+
+.tool-buttons-bottom {
+	border-top: 1px solid var(--color-dark-face-brd);
+	border-bottom: none;
+	margin-top: var(--indent-small);
+}
+
+.tools-separator {
+	border-right: 1px solid var(--color-dark-face-brd);
+}
+
+.preview-popup,
+.colors-popup {
+	position: fixed;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 2000;
+	user-select: none;
+	background-color: var(--color-dark-transparent-bg);
+}
+
+.preview-popup[hidden],
+.colors-popup[hidden] {
+	display: none;
+}
+
+.colors-bar {
+	--color: #ffffff;
+	display: grid;
+	grid-template-columns: repeat(5, 1fr);
+	gap: 5px;
+	margin: var(--indent-large);
+	background-color: #fff;
+	padding: 5px;
+	border-radius: 3px;
+}
+
+.colors-bar div {
+	width: 30px;
+	height: 25px;
+	background-color: var(--color);
+	border: 1px solid var(--color-dark-face-brd);
+	cursor: pointer;
+}
+
+.colors-bar div:hover {
+	outline: 1px solid var(--color-dark-face-brd);
+}
+
+.colors-bar div.selected {
+	outline: 2px solid var(--color-main-bg);
+	border: 1px solid var(--color-main-txt);
+}
+
+.preview-popup-body {
+	position: relative;
+	width: 300px;
+	height: 420px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #fff;
+	overflow: hidden;
+	border-radius: 3px;
+}
+
+.preview {
+	position: relative;
+	width: 252px;
+	height: 404px;
+}
+
+.preview img {
+	margin-left: -1px;
+}
+
+.preview canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 252px;
+	height: 404px;
+}
+
+.canvas-container {
+	position: relative;
+	height: 300px;
+	width: 100%;
+	overflow: hidden;
+	background-color: var(--color-main-bg);
+	border-bottom: 1px solid var(--color-dark-face-brd);
+}
+
+.canvas-container canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.canvas-container[data-tool="hand"] {
+	cursor: grab;
+}
+
+.canvas-container[data-tool="hand"]:active {
+	cursor: grabbing;
+}
+
+.canvas-container[data-tool="rect"] {
+	cursor: crosshair;
+}
+
+.canvas-container[data-tool="move"],
+:root:root .canvas-container.cursor-move {
+	cursor: move;
+}
+
+.layers-bar {
+}
+
+.layers-tools {
+	display: flex;
+	align-items: stretch;
+	border-bottom: 1px solid var(--color-dark-face-brd);
+}
+
+.layers-tools > div:first-of-type {
+	width: 170px;
+}
+
+.layers-header {
+	position: relative;
+}
+
+.layers-header-frames {
+	display: flex;
+	padding-left: 68px;
+	user-select: none;
+}
+
+.layers-header-frames > div {
+	padding: var(--indent-small);
+	flex: 1;
+	border-bottom: 1px solid var(--color-dark-face-bg);
+	border-left: 1px solid var(--color-dark-face-bg);
+	text-align: center;
+	color: var(--color-dark-face-txt-muted);
+	font-size: var(--font-size-kbd);
+	cursor: pointer;
+}
+
+.layers-header-frames > div:hover {
+	color: var(--color-main-txt);
+}
+
+.layers-header-frames > div.selected {
+	background-color: var(--color-dark-line-even-bg);
+}
+
+.layer-timeline {
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+	user-select: none;
+	border-bottom: 1px solid var(--color-dark-face-bg);
+	transition: top ease-in 0.2s;
+}
+
+.layer-timeline.highlighted {
+	background-color: var(--color-dark-line-even-bg);
+}
+
+.layer-timeline.highlighted .layer-frames > div {
+	background-color: var(--color-dark-line-even-bg);
+	border-left: 1px dotted var(--color-dark-line-odd-bg);
+}
+
+.layer-timeline.selected {
+	background-color: var(--color-dark-color1-bg);
+}
+
+.layer-timeline.selected .layer-frames > div {
+	background-color: var(--color-dark-color1-bg);
+}
+
+.layer-timeline.selected .layer-frames > div.selected {
+	background-color: var(--color-dark-color1-bg-lighter);
+	outline: 2px solid var(--color-selection-bg);
+	z-index: 3;
+}
+
+.layer-timeline.selected .layer-frames > div::before {
+	background-color: var(--color-dark-color2-bg);
+}
+
+.layer-move {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 28px;
+	cursor: grab;
+}
+
+.layer-move:active {
+	cursor: grabbing;
+}
+
+.layer-name {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	font-size: var(--font-size-kbd);
+	width: 20px;
+}
+
+.layer-flag {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+	width: 20px;
+	cursor: pointer;
+}
+
+.layer-flag[data-flag="1"] [data-flag="0"] {
+	display: none;
+}
+
+.layer-flag[data-flag="0"] [data-flag="1"] {
+	display: none;
+}
+
+.layer-frames {
+	display: flex;
+	position: relative;
+	flex: 1;
+}
+
+.layer-frames > div {
+	--height: 26px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: var(--height);
+	flex: 1;
+	border-left: 1px dotted var(--color-dark-face-bg);
+	background-color: var(--color-dark-line-odd-bg);
+	color: var(--color-dark-face-txt);
+	font-size: var(--font-size-kbd);
+}
+
+.layer-frames > div:hover {
+	outline: 2px solid var(--color-dark-face-hover-outline);
+	z-index: 2;
+}
+
+.layer-frames > div.repeated-frame::before,
+.layer-frames > div.blank-frame::before,
+.layer-frames > div.key-frame::before {
+	content: "";
+	position: absolute;
+	width: 100%;
+	display: block;
+	height: calc(var(--height) - 6px);
+	background-color: var(--color-face-bg);
+	z-index: 1;
+}
+
+.layer-frames > div.close-left::before {
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+}
+
+.layer-frames > div.close-right::before {
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+
+.layer-frames > div.close-left.close-right::before {
+}
+
+.layer-frames > div.blank-frame::after,
+.layer-frames > div.key-frame::after {
+	content: "";
+	position: relative;
+	display: flex;
+	height: 8px;
+	width: 8px;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+	z-index: 2;
+}
+
+.layer-frames > div.blank-frame::after {
+	border: 2px solid var(--color-face-txt);
+}
+
+.layer-frames > div.key-frame::after {
+	background-color: var(--color-face-txt);
+}
+
+.layer-frames > div.selected {
+	background-color: var(--color-dark-line-even-bg);
+}
+
+.layers-list {
+	position: relative;
+	width: 100%;
+	color: var(--color-dark-face-txt);
+}
+
+.layers-list.drag-mode .layer-timeline {
+	position: absolute;
+}
+
+kbd {
+	font-family: Tahoma, Arial, monospace;
+}
+
+@media screen and (max-width: 500px) {
+	kbd {
+		display: none;
+	}
+}

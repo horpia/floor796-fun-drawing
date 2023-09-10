@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Fun Drawing Animation</title>
+	<meta name="theme-color" content="currentColor">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<link href="polyfill.css" rel="stylesheet">
+</head>
+<body draggable="false" ondragstart="return false;" ondrop="return false;">
+<div id="editor-container" style="max-width: 800px; margin: 0 auto"></div>
+<script>
+	document.addEventListener('DOMContentLoaded', () => {
+		new funDrawing.AnimationEditor('./assets/example.f796i');
+	});
+</script>
+</body>
+</html>

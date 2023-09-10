@@ -1,0 +1,14 @@
+export const PX_COLS = 67;
+export const PX_ROWS = 38;
+export const PX_SIZE = 6;
+export const FRAMES = 12;
+export const SCALES = [0.5, 1, 2, 3, 4];
+export const SCREEN_SCALE = 2;
+export const CURSOR_COLOR = '#ffffff';
+export const CURSOR_COLOR_DARK = '#000000';
+export const GRID_COLOR = '#555555';
+export const HISTORY_LIMIT = 30;
+export const FRAME_DURATION = ~~(2000 / 12);
+export const LS_KEY = 'fun-drawing';
+export const LS_KEY_BACKUP = 'fun-drawing-bak';
+export const MAX_LAYERS = 40;

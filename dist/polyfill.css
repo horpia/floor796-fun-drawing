@@ -1,0 +1,101 @@
+/*
+ * This file contains copied styles from the floor796.com project and
+ * IT SHOULD NOT BE INCLUDED INTO THE PRODUCTION BUILD.
+ * It is necessary only for testing editor outside the floor796 project.
+ */
+
+:root {
+	--color-dark-face-brd: #555;
+	--color-dark-transparent-bg: rgba(0, 0, 0, 0.3);
+	--color-main-bg: #333;
+	--color-main-txt: #fff;
+	--color-dark-face-bg: #444;
+	--color-dark-face-txt-muted: #aaa;
+	--color-dark-line-odd-bg: #515253;
+	--color-dark-line-even-bg: #5e6163;
+	--color-dark-color1-bg: #66583e;
+	--color-dark-color1-bg-lighter: #786749;
+	--color-selection-bg: #fffa99;
+	--color-dark-face-txt: #efefef;
+	--font-size-default: 12px;
+	--font-size-kbd: 11px;
+	--font-size-big: 18px;
+	--color-dark-face-hover-outline: #fff;
+	--color-face-bg: #aaa;
+	--color-dark-row-brd: #888;
+	--color-dark-color2-bg: #56bc4e;
+	--color-face-txt: #444;
+	--color-dark-face-txt-kbd: #838383;
+	--color-dark-face-bg-lighter: #575b65;
+	--indent-small: 5px;
+	--indent-large: 10px;
+}
+
+body {
+	height: 100%;
+	margin: 0;
+	font: 12px/16px Tahoma, Helvetica, Arial, Verdana;
+	background-color: var(--color-dark-face-bg);
+}
+
+.button {
+	display: inline-flex;
+	height: 36px;
+	background-color: transparent;
+	border: none;
+	outline: none;
+	appearance: none;
+	cursor: pointer;
+	color: var(--color-dark-face-txt);
+	text-align: center;
+	vertical-align: middle;
+	font-weight: normal;
+	padding: 0 10px;
+	position: relative;
+	text-decoration: none;
+	align-items: center;
+	transition: background-color 0.2s linear;
+}
+
+.svg-icon {
+	font-size: var(--font-size-big);
+	vertical-align: middle;
+	width: 1em;
+	min-width: 1em;
+	height: 1em;
+	min-height: 1em;
+}
+
+.button svg {
+	font-size: var(--font-size-big);
+	vertical-align: middle;
+}
+
+.button kbd {
+	font-size: var(--font-size-kbd);
+	color: #838383;
+	margin-left: var(--indent-small);
+	margin-top: var(--indent-large);
+}
+
+.button span {
+	color: var(--color-dark-face-txt);
+	font-size: var(--font-size-default);
+	vertical-align: middle;
+	margin-left: var(--indent-small);
+	white-space: nowrap;
+}
+
+.button:hover {
+	background-color: var(--color-dark-face-bg-lighter);
+}
+
+.button:hover kbd {
+	color: var(--color-dark-face-txt);
+}
+
+.button:active,
+.button_checked,
+.button_checked:hover {
+	background-color: var(--color-main-bg);
+}
