@@ -356,7 +356,7 @@ export class AnimationCanvas {
 
 		const convClientXY = (e) => {
 			let x, y;
-			if (e instanceof TouchEvent) {
+			if (window.TouchEvent && e instanceof TouchEvent) {
 				x = e.touches[0].clientX;
 				y = e.touches[0].clientY;
 			} else {
