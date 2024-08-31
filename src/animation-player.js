@@ -54,6 +54,10 @@ export class AnimationPlayer {
 		this.#palette = null;
 	}
 
+	isDestroyed() {
+		return this.#imageData === null;
+	}
+
 	stop() {
 		this.#currentFrame = 0;
 
@@ -71,6 +75,11 @@ export class AnimationPlayer {
 	 * @param {function()} [callback]
 	 */
 	play(frames, callback = null) {
+		if (!this.#imageData) {
+			console.log('[FT] Instance was already destroyed');
+			return;
+		}
+
 		this.#frames = frames;
 		this.#renderCallback = callback;
 
@@ -81,6 +90,11 @@ export class AnimationPlayer {
 	}
 
 	#render() {
+		if (!this.#imageData) {
+			this.stop();
+			return;
+		}
+
 		if (this.#requestedAnimationFrame) {
 			cancelAnimationFrame(this.#requestedAnimationFrame);
 		}
