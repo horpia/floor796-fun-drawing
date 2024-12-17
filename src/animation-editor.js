@@ -63,11 +63,12 @@ export class AnimationEditor {
 	#canvas;
 
 	/**
-	 * @param {string} url
+	 * @param {string} [url]
+	 * @param {HTMLElement} [container]
 	 */
-	constructor(url = '') {
+	constructor(url = '', container = null) {
 		// create editor DOM
-		(document.querySelector('#editor-container') || document.body).innerHTML = iconsView + editorView;
+		(container || document.querySelector('#editor-container') || document.body).innerHTML = iconsView + editorView;
 		document.querySelectorAll('[data-title-ru]').forEach(el => {
 			el.title = el.getAttribute(`data-title-${globalThis.floor796.detectUserLanguage()}`);
 		})
