@@ -1,6 +1,9 @@
 import {PX_COLS, PX_ROWS} from "./config";
 
 export class ClipboardBar {
+	/** @type {HTMLElement} */
+	#container;
+
 	/** @type {AnimationCanvas} */
 	#canvas;
 
@@ -13,16 +16,18 @@ export class ClipboardBar {
 	#wholeFrame = false;
 
 	/**
+	 * @param {HTMLElement} cont
 	 * @param {AnimationCanvas} canvas
 	 * @param {ToolBar} toolBar
 	 */
-	constructor(canvas, toolBar) {
+	constructor(cont, canvas, toolBar) {
+		this.#container = cont;
 		this.#canvas = canvas;
 		this.#toolBar = toolBar;
 
-		document.querySelector('.button[data-role="copy"]').onclick = () => this.copy();
-		document.querySelector('.button[data-role="cut"]').onclick = () => this.cut();
-		document.querySelector('.button[data-role="paste"]').onclick = () => this.paste();
+		this.#container.querySelector('.button[data-role="copy"]').onclick = () => this.copy();
+		this.#container.querySelector('.button[data-role="cut"]').onclick = () => this.cut();
+		this.#container.querySelector('.button[data-role="paste"]').onclick = () => this.paste();
 	}
 
 	copy(erase = false) {

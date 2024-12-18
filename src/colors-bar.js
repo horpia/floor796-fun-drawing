@@ -1,4 +1,7 @@
 export class ColorsBar {
+	/** @type {HTMLElement} */
+	#container;
+
 	/** @type {number[][]} */
 	#colors = [];
 
@@ -11,7 +14,11 @@ export class ColorsBar {
 	/** @type {HTMLElement} */
 	#popup;
 
-	constructor() {
+	/**
+	 * @param {HTMLElement} cont 
+	 */
+	constructor(cont) {
+		this.#container = cont;
 		this.#colors = ColorsBar.generateColors();
 		this.#init();
 		this.setColor(27);
@@ -58,12 +65,12 @@ export class ColorsBar {
 	setColor(idx) {
 		this.#currentColor = idx;
 		this.#btnIndicator.style.fill = 'rgb(' + this.#colors[this.#currentColor].join(', ') + ')';
-		const selColor = document.querySelector('.colors-bar > div.selected');
+		const selColor = this.#container.querySelector('.colors-bar > div.selected');
 		if (selColor) {
 			selColor.classList.remove('selected');
 		}
 
-		document.querySelector(`.colors-bar > div[data-index="${idx}"]`).classList.add('selected');
+		this.#container.querySelector(`.colors-bar > div[data-index="${idx}"]`).classList.add('selected');
 	}
 
 	showColorsPalette() {
@@ -75,7 +82,7 @@ export class ColorsBar {
 	}
 
 	#init() {
-		const btn = document.querySelector('.button[data-role="color"]');
+		const btn = this.#container.querySelector('.button[data-role="color"]');
 		this.#btnIndicator = btn.querySelector('rect:last-of-type');
 
 		let colors = [];
@@ -85,7 +92,7 @@ export class ColorsBar {
 			colors.push(`<div style="--color: rgb(${r} ${g} ${b})" data-index="${i--}"></div>`);
 		}
 
-		const popup = document.querySelector('.colors-popup');
+		const popup = this.#container.querySelector('.colors-popup');
 		this.#popup = popup;
 		popup.onclick = (e) => {
 			if (e.target === popup) {
@@ -93,7 +100,7 @@ export class ColorsBar {
 			}
 		};
 
-		const el = document.querySelector('.colors-bar');
+		const el = this.#container.querySelector('.colors-bar');
 		el.innerHTML = colors.join('');
 		el.onclick = /** @param {MouseEvent} e */(e) => {
 			if (!e.target.hasAttribute('data-index')) {

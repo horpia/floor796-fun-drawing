@@ -1,4 +1,7 @@
 export class ToolBar {
+	/** @type {HTMLElement} */
+	#container;
+
 	/** @type {Map<string, AnimationTool>} */
 	#tools = new Map();
 
@@ -9,15 +12,21 @@ export class ToolBar {
 	#canvas;
 
 	/** @type {HTMLElement} */
-	#canvasCont = document.querySelector('.canvas-container');
+	#canvasCont;
 
 	/** @type {string} */
 	#currentTool = '';
 
-	constructor(canvas) {
+	/**
+	 * @param {HTMLElement} cont 
+	 * @param {AnimationCanvas} canvas 
+	 */
+	constructor(cont, canvas) {
+		this.#container = cont;
 		this.#canvas = canvas;
+		this.#canvasCont = this.#container.querySelector('.canvas-container');
 
-		document.querySelectorAll('.button[data-role]').forEach(el => {
+		this.#container.querySelectorAll('.button[data-role]').forEach(el => {
 			this.#buttons.set(el.dataset.role, el);
 			el.addEventListener('click', () => this.setTool(el.dataset.role));
 		});

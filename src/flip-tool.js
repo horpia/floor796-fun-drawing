@@ -4,11 +4,15 @@ export class FlipTool {
 	/** @type {AnimationCanvas} */
 	#canvas;
 
-	constructor(canvas) {
+	/**
+	 * @param {HTMLElement} cont 
+	 * @param {AnimationCanvas} canvas 
+	 */
+	constructor(cont, canvas) {
 		this.#canvas = canvas;
 
-		document.querySelector('button[data-role="flip-x"]').onclick = () => this.#flipHorizontal();
-		document.querySelector('button[data-role="flip-y"]').onclick = () => this.#flipVertical();
+		cont.querySelector('button[data-role="flip-x"]').onclick = () => this.#flipHorizontal();
+		cont.querySelector('button[data-role="flip-y"]').onclick = () => this.#flipVertical();
 	}
 
 	#flipHorizontal() {

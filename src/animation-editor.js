@@ -26,6 +26,9 @@ import iconsView from "./html/icons.html";
 import "./style/editor.css"
 
 export class AnimationEditor {
+	/** @type {HTMLElement} */
+	#container;
+
 	/** @type {CommitObserver} */
 	#commitObserver;
 
@@ -67,46 +70,49 @@ export class AnimationEditor {
 	 * @param {HTMLElement} [container]
 	 */
 	constructor(url = '', container = null) {
-		// create editor DOM
-		(container || document.querySelector('#editor-container') || document.body).innerHTML = iconsView + editorView;
-		document.querySelectorAll('[data-title-ru]').forEach(el => {
+		this.#container = container || document.querySelector('#editor-container') || document.body;
+
+		this.#container.innerHTML = iconsView + editorView;
+
+		this.#container.querySelectorAll('[data-title-ru]').forEach(el => {
 			el.title = el.getAttribute(`data-title-${globalThis.floor796.detectUserLanguage()}`);
 		})
 
 		this.#commitObserver = new CommitObserver();
 		this.#layers = new AnimationLayers(this.#commitObserver);
-		this.#colorsBar = new ColorsBar();
-		this.#sizeBar = new SizeBar();
-		this.#canvas = new AnimationCanvas(this.#commitObserver, this.#layers, this.#colorsBar.colors);
-		this.#preview = new AnimationPreview(this.#canvas);
-		this.#toolBar = new ToolBar(this.#canvas);
+		this.#colorsBar = new ColorsBar(this.#container);
+		this.#sizeBar = new SizeBar(this.#container);
+		this.#canvas = new AnimationCanvas(this.#container, this.#commitObserver, this.#layers, this.#colorsBar.colors);
+		this.#preview = new AnimationPreview(this.#container, this.#canvas);
+		this.#toolBar = new ToolBar(this.#container, this.#canvas);
 		this.#toolBar.bindTool('hand', new AnimationToolHand(this.#canvas));
 		this.#toolBar.bindTool('pencil', new AnimationToolPencil(this.#canvas, this.#colorsBar, this.#sizeBar));
 		this.#toolBar.bindTool('line', new AnimationToolLine(this.#canvas, this.#colorsBar, this.#sizeBar));
 		this.#toolBar.bindTool('ellipse', new AnimationToolEllipse(this.#canvas, this.#colorsBar, this.#sizeBar));
 		this.#toolBar.bindTool('eraser', new AnimationToolEraser(this.#canvas, this.#sizeBar));
 		this.#toolBar.bindTool('fill', new AnimationToolFill(this.#canvas, this.#colorsBar));
-		this.#toolBar.bindTool('rect', new AnimationToolRect(this.#canvas));
+		this.#toolBar.bindTool('rect', new AnimationToolRect(this.#container, this.#canvas));
 		this.#toolBar.bindTool('move', new AnimationToolMove(this.#canvas));
 		this.#toolBar.bindTool('pick-color', new AnimationToolPickColor(this.#canvas, this.#colorsBar));
 		this.#toolBar.setTool('pencil');
 
-		this.#flipTool = new FlipTool(this.#canvas);
-		this.#layersBar = new LayersBar(this.#canvas, this.#toolBar);
-		this.#clipboardBar = new ClipboardBar(this.#canvas, this.#toolBar);
+		this.#flipTool = new FlipTool(this.#container, this.#canvas);
+		this.#layersBar = new LayersBar(this.#container, this.#canvas, this.#toolBar);
+		this.#clipboardBar = new ClipboardBar(this.#container, this.#canvas, this.#toolBar);
 
 		this.#historyBar = new HistoryBar(
+			this.#container,
 			this.#commitObserver,
 			this.#canvas,
 			this.#layersBar,
 			this.#toolBar
 		);
 
-		this.#filesBar = new FilesBar(this.#canvas, this.#layersBar, this.#toolBar, this.#historyBar);
+		this.#filesBar = new FilesBar(this.#container, this.#canvas, this.#layersBar, this.#toolBar, this.#historyBar);
 
 		window.onresize = this.updateSize.bind(this);
 
-		document.querySelector('.button[data-role="delete"]').onclick = () => this.resetAll();
+		this.#container.querySelector('.button[data-role="delete"]').onclick = () => this.resetAll();
 
 		this.updateSize();
 		if (url === '') {

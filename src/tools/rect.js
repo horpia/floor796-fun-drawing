@@ -8,7 +8,7 @@ export class AnimationToolRect extends AnimationTool {
 	#startPixelPos = [0, 0];
 
 	/** @type {HTMLElement} */
-	#container = document.querySelector('.canvas-container');
+	#container;
 
 	/** @type {AnimationToolMove|null} */
 	#moveTool = null;
@@ -16,9 +16,10 @@ export class AnimationToolRect extends AnimationTool {
 	/**
 	 * @param {AnimationCanvas} canvas
 	 */
-	constructor(canvas) {
+	constructor(cont, canvas) {
 		super();
 		this.#canvas = canvas;
+		this.#container = cont.querySelector('.canvas-container');
 	}
 
 	handleStart(col, row, x, y) {

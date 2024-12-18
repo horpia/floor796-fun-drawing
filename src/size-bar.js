@@ -1,11 +1,18 @@
 export class SizeBar {
+	/** @type {HTMLElement} */
+	#container;
+
 	/** @type {Map<number, HTMLButtonElement>} */
 	#buttons = new Map();
 
 	#currentSize = 1;
 
-	constructor() {
-		document.querySelectorAll('.button[data-role="size"]').forEach(el => {
+	/**
+	 * @param {HTMLElement} cont 
+	 */
+	constructor(cont) {
+		this.#container = cont;
+		this.#container.querySelectorAll('.button[data-role="size"]').forEach(el => {
 			const size = parseInt(el.dataset.size, 10);
 			this.#buttons.set(size, el);
 			el.addEventListener('click', () => this.setSize(size));

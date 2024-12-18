@@ -2,6 +2,9 @@ import {HISTORY_LIMIT, LS_KEY, LS_KEY_BACKUP} from "./config";
 import {AnimationFile} from "./animation-file";
 
 export class HistoryBar {
+	/** @type {HTMLElement} */
+	#container;
+
 	/** @type {CommitObserver} */
 	#commitObserver;
 
@@ -23,19 +26,21 @@ export class HistoryBar {
 	#lastStateJson = '';
 
 	/**
+	 * @param {HTMLElement} cont
 	 * @param {CommitObserver} commitObserver
 	 * @param {AnimationCanvas} canvas
 	 * @param {LayersBar} layersBar
 	 * @param {ToolBar} toolBar
 	 */
-	constructor(commitObserver, canvas, layersBar, toolBar) {
+	constructor(cont, commitObserver, canvas, layersBar, toolBar) {
+		this.#container = cont;
 		this.#commitObserver = commitObserver;
 		this.#canvas = canvas;
 		this.#layersBar = layersBar;
 		this.#toolBar = toolBar;
 		this.save();
-		document.querySelector('.button[data-role="undo"]').onclick = () => this.undo();
-		document.querySelector('.button[data-role="redo"]').onclick = () => this.redo();
+		this.#container.querySelector('.button[data-role="undo"]').onclick = () => this.undo();
+		this.#container.querySelector('.button[data-role="redo"]').onclick = () => this.redo();
 
 		this.#commitObserver.observe(() => this.save());
 	}

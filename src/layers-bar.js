@@ -2,6 +2,9 @@ import {FRAMES, MAX_LAYERS} from "./config";
 import {DragController} from "./helpers/drag-controller";
 
 export class LayersBar {
+	/** @type {HTMLElement} */
+	#container;
+
 	/** @type {AnimationCanvas} */
 	#canvas;
 
@@ -15,22 +18,25 @@ export class LayersBar {
 	#layerMap = new Map();
 
 	/** @type {HTMLDivElement} */
-	#listEl = document.querySelector('.layers-list');
+	#listEl;
 
 	/** @type {HTMLDivElement} */
-	#headerFramesEl = document.querySelector('.layers-header-frames');
+	#headerFramesEl;
 
-	constructor(canvas, toolBar) {
+	constructor(cont, canvas, toolBar) {
+		this.#container = cont;
 		this.#canvas = canvas;
 		this.#toolBar = toolBar;
+		this.#listEl = this.#container.querySelector('.layers-list');
+		this.#headerFramesEl = this.#container.querySelector('.layers-header-frames');
 		this.#createFramesHeader();
-		document.querySelector('.button[data-role="add-layer"]').onclick = () => this.#insertNewLayer();
-		document.querySelector('.button[data-role="remove-layer"]').onclick = () => this.#removeSelectedLayer();
-		document.querySelector('.button[data-role="merge-layer"]').onclick = () => this.#mergeLayers();
-		document.querySelector('.button[data-role="copy-layer"]').onclick = () => this.#duplicateLayer();
-		document.querySelector('.button[data-role="clear-frame"]').onclick = () => this.makeBlankFrame();
-		document.querySelector('.button[data-role="insert-frame"]').onclick = () => this.insertFrame();
-		document.querySelector('.button[data-role="remove-frame"]').onclick = () => this.removeFrame();
+		this.#container.querySelector('.button[data-role="add-layer"]').onclick = () => this.#insertNewLayer();
+		this.#container.querySelector('.button[data-role="remove-layer"]').onclick = () => this.#removeSelectedLayer();
+		this.#container.querySelector('.button[data-role="merge-layer"]').onclick = () => this.#mergeLayers();
+		this.#container.querySelector('.button[data-role="copy-layer"]').onclick = () => this.#duplicateLayer();
+		this.#container.querySelector('.button[data-role="clear-frame"]').onclick = () => this.makeBlankFrame();
+		this.#container.querySelector('.button[data-role="insert-frame"]').onclick = () => this.insertFrame();
+		this.#container.querySelector('.button[data-role="remove-frame"]').onclick = () => this.removeFrame();
 		this.build();
 	}
 
@@ -190,12 +196,12 @@ export class LayersBar {
 			this.#layerElements[i].classList.toggle('selected', i === idx);
 		}
 
-		document.querySelectorAll('.layers-header-frames > div.selected, .layer-frames > div.selected').forEach(el => {
+		this.#container.querySelectorAll('.layers-header-frames > div.selected, .layer-frames > div.selected').forEach(el => {
 			el.classList.remove('selected');
 		});
 
 		const frm = this.#canvas.layers.currentFrame + 1;
-		document.querySelectorAll(`.layers-header-frames > div:nth-child(${frm}), .layer-frames > div:nth-child(${frm})`)
+		this.#container.querySelectorAll(`.layers-header-frames > div:nth-child(${frm}), .layer-frames > div:nth-child(${frm})`)
 			.forEach(el => {
 				el.classList.add('selected');
 			});

@@ -10,6 +10,9 @@ const TRANSFORM_MATRIX = [
 ];
 
 export class AnimationPreview {
+	/** @type {HTMLElement} */
+	#container;
+	
 	/** @type {AnimationCanvas} */
 	#canvas;
 
@@ -17,17 +20,26 @@ export class AnimationPreview {
 	#player;
 
 	/** @type {HTMLElement} */
-	#popup = document.querySelector('.preview-popup');
+	#popup;
 
 	/** @type {CanvasRenderingContext2D} */
-	#ctx = document.querySelector('.preview-popup canvas').getContext('2d');
+	#ctx;
 
-	constructor(canvas) {
+	/**
+	 * @param {HTMLElement} cont 
+	 * @param {AnimationCanvas} canvas 
+	 */
+	constructor(cont, canvas) {
+		this.#container = cont;
 		this.#canvas = canvas;
+
+		this.#popup = this.#container.querySelector('.preview-popup');
+		this.#ctx = this.#container.querySelector('.preview-popup canvas').getContext('2d');
+
 		this.#ctx.canvas.width = 252 * SCREEN_SCALE;
 		this.#ctx.canvas.height = 404 * SCREEN_SCALE;
 
-		document.querySelector('.button[data-role="play"]').onclick = () => this.play();
+		this.#container.querySelector('.button[data-role="play"]').onclick = () => this.play();
 		this.#popup.onclick = () => this.closePopup();
 	}
 

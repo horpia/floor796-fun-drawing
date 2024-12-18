@@ -10,6 +10,9 @@ import {
 } from "./config";
 
 export class AnimationCanvas {
+	/** @type {HTMLElement} */
+	#container;
+
 	/** @type {CommitObserver} */
 	#commitObserver;
 
@@ -70,11 +73,13 @@ export class AnimationCanvas {
 	#cursorRequestedAnimationFrame;
 
 	/**
+	 * @param {HTMLElement} mainCont 
 	 * @param {CommitObserver} commitObserver
 	 * @param {AnimationLayers} layers
 	 * @param {number[][]} palette
 	 */
-	constructor(commitObserver, layers, palette) {
+	constructor(mainCont, commitObserver, layers, palette) {
+		this.#container = mainCont;
 		this.#commitObserver = commitObserver;
 		this.#canvas = document.createElement('canvas');
 		this.#ctx = this.#canvas.getContext('2d');
@@ -90,14 +95,14 @@ export class AnimationCanvas {
 		this.#layers = layers;
 		this.#palette = palette;
 
-		const cont = document.querySelector('.canvas-container');
+		const cont = this.#container.querySelector('.canvas-container');
 		cont.appendChild(this.#canvas);
 		cont.appendChild(this.#cursorCanvas);
 
 		this.#listenEvents(cont);
 
-		document.querySelector('.button[data-role="zoom-in"]').onclick = () => this.#setScale(1);
-		document.querySelector('.button[data-role="zoom-out"]').onclick = () => this.#setScale(-1);
+		this.#container.querySelector('.button[data-role="zoom-in"]').onclick = () => this.#setScale(1);
+		this.#container.querySelector('.button[data-role="zoom-out"]').onclick = () => this.#setScale(-1);
 	}
 
 	/**

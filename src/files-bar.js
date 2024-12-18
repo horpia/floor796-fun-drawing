@@ -14,18 +14,19 @@ export class FilesBar {
 	#historyBar;
 
 	/**
+	 * @param {HTMLElement} cont
 	 * @param {AnimationCanvas} canvas
 	 * @param {LayersBar} layersBar
 	 * @param {ToolBar} toolBars
 	 * @param {HistoryBar} historyBar
 	 */
-	constructor(canvas, layersBar, toolBars, historyBar) {
+	constructor(cont, canvas, layersBar, toolBars, historyBar) {
 		this.#canvas = canvas;
 		this.#layersBar = layersBar;
 		this.#toolBars = toolBars;
 		this.#historyBar = historyBar;
-		document.querySelector('.button[data-role="download"]').onclick = () => this.#downloadFile();
-		document.querySelector('.button[data-role="open"]').onclick = () => this.#openFile();
+		cont.querySelector('.button[data-role="download"]').onclick = () => this.#downloadFile();
+		cont.querySelector('.button[data-role="open"]').onclick = () => this.#openFile();
 	}
 
 	async loadByUrl(url) {
